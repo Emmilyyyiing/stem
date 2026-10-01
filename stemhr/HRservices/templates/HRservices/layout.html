@@ -1,0 +1,207 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STEM HR Services</title>
+
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Theme -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#8b5cf6',
+                        primaryDark: '#6d28d9',
+                        darkBg: '#0f0f1a',
+                        card: '#1a1a2e'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+    /* ================= NAVBAR ================= */
+    const navToggle = document.getElementById('nav-toggle');
+    const navMenu = document.getElementById('nav-menu');
+    const navIcon = document.getElementById('nav-icon');
+
+    if (navToggle && navMenu && navIcon) {
+        navToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('hidden');
+            navIcon.textContent = navMenu.classList.contains('hidden') ? '☰' : '✕';
+        });
+
+        document.querySelectorAll('#nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.add('hidden');
+                navIcon.textContent = '☰';
+            });
+        });
+    }
+
+
+    /* ================= CLIENT EXPAND ================= */
+    const triggers = document.querySelectorAll('.client-trigger');
+
+    if (triggers.length > 0) {
+        triggers.forEach(trigger => {
+            trigger.addEventListener('click', () => {
+                const target = document.getElementById(trigger.dataset.target);
+                if (!target) return;
+
+                const isOpen = target.style.maxHeight && target.style.maxHeight !== '0px';
+
+                document.querySelectorAll('.client-expand').forEach(panel => {
+                    panel.style.maxHeight = '0px';
+                });
+
+                if (!isOpen) {
+                    target.style.maxHeight = target.scrollHeight + 'px';
+                }
+            });
+        });
+    }
+
+
+    /* ================= CAROUSEL ================= */
+    const carousels = document.querySelectorAll('.carousel-inner');
+
+    if (carousels.length > 0) {
+        carousels.forEach(carousel => {
+            const items = Array.from(carousel.querySelectorAll('.carousel-item'));
+            if (!items.length) return;
+
+            let index = 0;
+
+            const show = (i) => {
+                items.forEach((el, idx) => {
+                    el.style.display = (idx === i) ? 'block' : 'none';
+                });
+            };
+
+            show(index);
+
+            const container = carousel.closest('.relative');
+            if (!container) return;
+
+            const prev = container.querySelector('[data-action="prev"]');
+            const next = container.querySelector('[data-action="next"]');
+
+            if (prev) {
+                prev.addEventListener('click', () => {
+                    index = (index - 1 + items.length) % items.length;
+                    show(index);
+                });
+            }
+
+            if (next) {
+                next.addEventListener('click', () => {
+                    index = (index + 1) % items.length;
+                    show(index);
+                });
+            }
+        });
+    }
+
+});
+</script>
+<body class="bg-darkBg text-gray-200 font-[Inter]">
+
+    <!-- NAVBAR -->
+    <nav class="bg-black/40 backdrop-blur-lg sticky top-0 z-50 border-b border-white/10">
+
+    <div class="max-w-7xl mx-auto px-6 flex justify-between items-center h-16">
+
+        <!-- Logo -->
+        <a href="/" class="text-xl font-semibold text-white">
+            STEM <span class="text-purple-400">HR</span>
+        </a>
+
+        <!-- Mobile Button -->
+        <button id="nav-toggle" class="lg:hidden text-white text-2xl">
+            <span id="nav-icon">☰</span>
+        </button>
+
+        <!-- Desktop Links -->
+        <div class="hidden lg:flex items-center gap-8 text-sm text-gray-300">
+            <a href="/" class="hover:text-purple-400">Home</a>
+            <a href="/jobs/" class="hover:text-purple-400">Jobs</a>
+            <a href="/about/" class="hover:text-purple-400">About</a>
+            <a href="/contact/" class="hover:text-purple-400">Contact</a>
+            <a href="/services/" class="hover:text-purple-400">Our Services</a>
+        </div>
+
+        <!-- CTA -->
+        <a href="/jobs/" class="hidden lg:block bg-purple-600 px-4 py-2 rounded-lg text-white hover:bg-purple-700 transition">
+            Get Started
+        </a>
+
+    </div>
+
+    <!-- MOBILE DROPDOWN -->
+    <div id="nav-menu"
+         class="hidden lg:hidden flex flex-col gap-4 px-6 pb-6 text-sm text-gray-300 bg-black/60 backdrop-blur-lg">
+
+        <a href="/" class="hover:text-purple-400">Home</a>
+        <a href="/jobs/" class="hover:text-purple-400">Jobs</a>
+        <a href="/about/" class="hover:text-purple-400">About</a>
+        <a href="/contact/" class="hover:text-purple-400">Contact</a>
+        <a href="/services/" class="hover:text-purple-400">Our Services</a>
+
+        <a href="/jobs/" class="mt-2 bg-purple-600 px-4 py-2 rounded-lg text-white text-center">
+            Get Started
+        </a>
+
+    </div>
+
+</nav>
+
+
+    <!-- CONTENT -->
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+
+    <!-- FOOTER -->
+    <footer class="border-t border-white/10 py-12 text-center text-gray-400">
+
+    <div class="flex justify-center gap-6 mb-4 items-center">
+
+        <!-- LinkedIn -->
+        <a href="https://in.linkedin.com/in/prashantbankar23" target="_blank"
+           class="hover:opacity-100 opacity-70 transition">
+            <img src="{% static 'HRservices/media/linkedin.svg' %}" 
+                 alt="LinkedIn"
+                 class="h-5 w-auto object-contain">
+        </a>
+
+        <!-- Email -->
+        <a href="mailto:prashant@stemhrservices.com"
+           class="hover:opacity-100 opacity-70 transition">
+            <img src="{% static 'HRservices/media/mail.png' %}" 
+                 alt="Email"
+                 class="h-5 w-auto object-contain">
+        </a>
+
+    </div>
+
+    <p>© 2026 STEM HR Services</p>
+
+</footer>
+
+</body>
+</html>

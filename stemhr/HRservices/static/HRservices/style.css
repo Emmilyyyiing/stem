@@ -1,0 +1,56 @@
+/* ===============================
+   DESIGN TOKENS (optional fallback)
+================================= */
+:root {
+  --primary: #8b5cf6;
+  --primary-dark: #6d28d9;
+}
+
+/* ===============================
+   RESET / BASE
+================================= */
+body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Remove this (was breaking dark theme) */
+/* text-align: center; */
+/* background-color: #fbfbfb; */
+
+
+/* ===============================
+   FORM SYSTEM (IMPORTANT)
+================================= */
+input, textarea, select {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: rgba(255,255,255,0.4);
+}
+
+input:focus, textarea:focus, select:focus {
+    border-color: #8b5cf6;
+    box-shadow: 0 0 0 1px #8b5cf6;
+}
+
+/* ===============================
+   SCROLLBAR (optional but nice)
+================================= */
+::-webkit-scrollbar {
+    width: 6px;
+}
+::-webkit-scrollbar-thumb {
+    background: #8b5cf6;
+    border-radius: 10px;
+}

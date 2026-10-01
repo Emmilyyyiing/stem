@@ -1,0 +1,50 @@
+{% extends 'HRservices/layout.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="min-h-screen bg-[#0f0f1a] py-16 px-4">
+
+    <div class="max-w-3xl mx-auto bg-[#1a1a2e] p-8 rounded-xl border border-white/10 shadow-lg">
+
+        <!-- Title -->
+        <h2 class="text-3xl md:text-4xl font-semibold text-white text-center mb-10">
+            Apply for <span class="text-purple-400">{{ job.title }}</span>
+        </h2>
+
+        <!-- FORM -->
+        <form method="post" enctype="multipart/form-data" class="space-y-6 text-left">
+            {% csrf_token %}
+
+            {% for field in form %}
+                <div>
+                    <!-- Label -->
+                    <label class="block text-sm text-gray-400 mb-1">
+                        {{ field.label }}
+                    </label>
+
+                    <!-- Input -->
+                    {{ field }}
+
+                    <!-- Errors -->
+                    {% if field.errors %}
+                        <p class="text-red-400 text-xs mt-1">
+                            {{ field.errors }}
+                        </p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+
+            <!-- Submit -->
+            <button type="submit"
+                class="w-full py-3 bg-purple-600 hover:bg-purple-700 text-white font-medium rounded-lg transition">
+                Submit Application
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}
